@@ -2,33 +2,22 @@
   "widgets": [
     {
       "type": "text",
-      "x": 0,
-      "y": 0,
-      "width": 24,
-      "height": 1,
+      "x": 0, "y": 0, "width": 24, "height": 1,
       "properties": {
         "markdown": "# Order API — Production Dashboard\n**Golden Signals:** Rate · Errors · Latency · Saturation  |  Namespace: `OrderAPI/Production`"
       }
     },
-
     {
       "type": "text",
-      "x": 0,
-      "y": 1,
-      "width": 24,
-      "height": 1,
-      "properties": {
-        "markdown": "## Traffic (Rate)"
-      }
+      "x": 0, "y": 1, "width": 24, "height": 1,
+      "properties": { "markdown": "## Traffic (Rate)" }
     },
     {
       "type": "metric",
-      "x": 0,
-      "y": 2,
-      "width": 8,
-      "height": 6,
+      "x": 0, "y": 2, "width": 8, "height": 6,
       "properties": {
         "title": "Request Rate (req/min)",
+        "region": "us-east-1",
         "view": "timeSeries",
         "stacked": false,
         "metrics": [
@@ -48,12 +37,10 @@
     },
     {
       "type": "metric",
-      "x": 8,
-      "y": 2,
-      "width": 8,
-      "height": 6,
+      "x": 8, "y": 2, "width": 8, "height": 6,
       "properties": {
         "title": "Orders Created per Minute",
+        "region": "us-east-1",
         "view": "timeSeries",
         "metrics": [
           ["OrderAPI/Production", "OrdersPerMinute", "Service", "order-api", "Environment", "production",
@@ -67,12 +54,10 @@
     },
     {
       "type": "metric",
-      "x": 16,
-      "y": 2,
-      "width": 8,
-      "height": 6,
+      "x": 16, "y": 2, "width": 8, "height": 6,
       "properties": {
         "title": "Average & Total Order Value ($)",
+        "region": "us-east-1",
         "view": "timeSeries",
         "metrics": [
           ["OrderAPI/Production", "AvgOrderValue", "Service", "order-api", "Environment", "production",
@@ -87,22 +72,15 @@
 
     {
       "type": "text",
-      "x": 0,
-      "y": 8,
-      "width": 24,
-      "height": 1,
-      "properties": {
-        "markdown": "## Errors"
-      }
+      "x": 0, "y": 8, "width": 24, "height": 1,
+      "properties": { "markdown": "## Errors" }
     },
     {
       "type": "metric",
-      "x": 0,
-      "y": 9,
-      "width": 8,
-      "height": 6,
+      "x": 0, "y": 9, "width": 8, "height": 6,
       "properties": {
         "title": "Error Rate (%)",
+        "region": "us-east-1",
         "view": "timeSeries",
         "metrics": [
           ["OrderAPI/Production", "ErrorRate", "Service", "order-api", "Environment", "production",
@@ -112,29 +90,27 @@
         "yAxis": {"left": {"min": 0, "max": 100}},
         "annotations": {
           "horizontal": [
-            {"label": "Warning (1%)",  "value": 1,  "color": "#ff7f0e"},
-            {"label": "Critical (5%)", "value": 5,  "color": "#d62728"}
+            {"label": "Warning (1%)",  "value": 1, "color": "#ff7f0e"},
+            {"label": "Critical (5%)", "value": 5, "color": "#d62728"}
           ]
         }
       }
     },
     {
       "type": "metric",
-      "x": 8,
-      "y": 9,
-      "width": 8,
-      "height": 6,
+      "x": 8, "y": 9, "width": 8, "height": 6,
       "properties": {
         "title": "HTTP Errors by Type",
+        "region": "us-east-1",
         "view": "timeSeries",
         "metrics": [
-          ["OrderAPI/Production", "ValidationErrors",  "Service", "order-api", "Environment", "production",
+          ["OrderAPI/Production", "ValidationErrors", "Service", "order-api", "Environment", "production",
            {"label": "400 Validation", "color": "#ff7f0e", "stat": "Sum", "period": 60}],
-          ["OrderAPI/Production", "OrderNotFound",      "Service", "order-api", "Environment", "production",
+          ["OrderAPI/Production", "OrderNotFound", "Service", "order-api", "Environment", "production",
            {"label": "404 Not Found", "color": "#bcbd22", "stat": "Sum", "period": 60}],
-          ["OrderAPI/Production", "UnhandledErrors",    "Service", "order-api", "Environment", "production",
+          ["OrderAPI/Production", "UnhandledErrors", "Service", "order-api", "Environment", "production",
            {"label": "500 Unhandled", "color": "#d62728", "stat": "Sum", "period": 60}],
-          ["OrderAPI/Production", "ChaosErrors",        "Service", "order-api", "Environment", "production",
+          ["OrderAPI/Production", "ChaosErrors", "Service", "order-api", "Environment", "production",
            {"label": "Chaos Injected", "color": "#8c564b", "stat": "Sum", "period": 60}]
         ],
         "period": 60,
@@ -143,12 +119,10 @@
     },
     {
       "type": "metric",
-      "x": 16,
-      "y": 9,
-      "width": 8,
-      "height": 6,
+      "x": 16, "y": 9, "width": 8, "height": 6,
       "properties": {
         "title": "Error Rate vs Request Rate (Correlation)",
+        "region": "us-east-1",
         "view": "timeSeries",
         "metrics": [
           ["OrderAPI/Production", "RequestRate", "Service", "order-api", "Environment", "production",
@@ -163,22 +137,15 @@
 
     {
       "type": "text",
-      "x": 0,
-      "y": 15,
-      "width": 24,
-      "height": 1,
-      "properties": {
-        "markdown": "## Latency (Duration)"
-      }
+      "x": 0, "y": 15, "width": 24, "height": 1,
+      "properties": { "markdown": "## Latency (Duration)" }
     },
     {
       "type": "metric",
-      "x": 0,
-      "y": 16,
-      "width": 12,
-      "height": 6,
+      "x": 0, "y": 16, "width": 12, "height": 6,
       "properties": {
-        "title": "API Latency Percentiles (ms)",
+        "title": "API Latency P95 (ms)",
+        "region": "us-east-1",
         "view": "timeSeries",
         "metrics": [
           ["OrderAPI/Production", "P95LatencyMs", "Service", "order-api", "Environment", "production",
@@ -196,12 +163,10 @@
     },
     {
       "type": "metric",
-      "x": 12,
-      "y": 16,
-      "width": 12,
-      "height": 6,
+      "x": 12, "y": 16, "width": 12, "height": 6,
       "properties": {
         "title": "Active Sessions",
+        "region": "us-east-1",
         "view": "timeSeries",
         "metrics": [
           ["OrderAPI/Production", "ActiveSessions", "Service", "order-api", "Environment", "production",
@@ -214,22 +179,15 @@
 
     {
       "type": "text",
-      "x": 0,
-      "y": 22,
-      "width": 24,
-      "height": 1,
-      "properties": {
-        "markdown": "## Saturation (Resource Utilization)"
-      }
+      "x": 0, "y": 22, "width": 24, "height": 1,
+      "properties": { "markdown": "## Saturation (Resource Utilization)" }
     },
     {
       "type": "metric",
-      "x": 0,
-      "y": 23,
-      "width": 8,
-      "height": 6,
+      "x": 0, "y": 23, "width": 8, "height": 6,
       "properties": {
         "title": "CPU Utilization (%)",
+        "region": "us-east-1",
         "view": "timeSeries",
         "metrics": [
           ["OrderAPI/System", "cpu_usage_user",   {"label": "User",   "color": "#1f77b4", "stat": "Average", "period": 60}],
@@ -247,12 +205,10 @@
     },
     {
       "type": "metric",
-      "x": 8,
-      "y": 23,
-      "width": 8,
-      "height": 6,
+      "x": 8, "y": 23, "width": 8, "height": 6,
       "properties": {
         "title": "Memory Used (%)",
+        "region": "us-east-1",
         "view": "timeSeries",
         "metrics": [
           ["OrderAPI/System", "mem_used_percent",
@@ -270,12 +226,10 @@
     },
     {
       "type": "metric",
-      "x": 16,
-      "y": 23,
-      "width": 8,
-      "height": 6,
+      "x": 16, "y": 23, "width": 8, "height": 6,
       "properties": {
         "title": "Disk Used (%)",
+        "region": "us-east-1",
         "view": "timeSeries",
         "metrics": [
           ["OrderAPI/System", "used_percent",
@@ -294,28 +248,22 @@
 
     {
       "type": "text",
-      "x": 0,
-      "y": 29,
-      "width": 24,
-      "height": 1,
-      "properties": {
-        "markdown": "## Alarm Status"
-      }
+      "x": 0, "y": 29, "width": 24, "height": 1,
+      "properties": { "markdown": "## Alarm Status" }
     },
     {
       "type": "alarm",
-      "x": 0,
-      "y": 30,
-      "width": 24,
-      "height": 4,
+      "x": 0, "y": 30, "width": 24, "height": 4,
       "properties": {
         "title": "Active Alarms",
         "alarms": [
           "arn:aws:cloudwatch:us-east-1:ACCOUNT_ID:alarm:OrderAPI-ErrorRate-Warning",
           "arn:aws:cloudwatch:us-east-1:ACCOUNT_ID:alarm:OrderAPI-ErrorRate-Critical",
+          "arn:aws:cloudwatch:us-east-1:ACCOUNT_ID:alarm:OrderAPI-Latency-P95-Warning",
           "arn:aws:cloudwatch:us-east-1:ACCOUNT_ID:alarm:OrderAPI-Latency-P95-Critical",
           "arn:aws:cloudwatch:us-east-1:ACCOUNT_ID:alarm:OrderAPI-CPU-Critical",
-          "arn:aws:cloudwatch:us-east-1:ACCOUNT_ID:alarm:OrderAPI-Memory-Critical"
+          "arn:aws:cloudwatch:us-east-1:ACCOUNT_ID:alarm:OrderAPI-Memory-Critical",
+          "arn:aws:cloudwatch:us-east-1:ACCOUNT_ID:alarm:OrderAPI-OrderRate-Drop"
         ]
       }
     }
