@@ -1,0 +1,146 @@
+{
+  "alarms": [
+    {
+      "AlarmName": "OrderAPI-ErrorRate-Warning",
+      "AlarmDescription": "Error rate exceeded 1% — investigate recent deployments and upstream dependencies.",
+      "Namespace": "OrderAPI/Production",
+      "MetricName": "ErrorRate",
+      "Dimensions": [
+        {"Name": "Service",     "Value": "order-api"},
+        {"Name": "Environment", "Value": "production"}
+      ],
+      "Statistic": "Average",
+      "Period": 60,
+      "EvaluationPeriods": 3,
+      "DatapointsToAlarm": 2,
+      "Threshold": 1.0,
+      "ComparisonOperator": "GreaterThanThreshold",
+      "TreatMissingData": "notBreaching",
+      "AlarmActions": ["arn:aws:sns:us-east-1:ACCOUNT_ID:OrderAPI-Alerts"],
+      "OKActions":    ["arn:aws:sns:us-east-1:ACCOUNT_ID:OrderAPI-Alerts"],
+      "_rationale": "1% error rate is the first sign of degradation; 2/3 datapoints avoids noise from transient spikes."
+    },
+    {
+      "AlarmName": "OrderAPI-ErrorRate-Critical",
+      "AlarmDescription": "CRITICAL: Error rate exceeded 5% — service is significantly degraded. Immediate action required.",
+      "Namespace": "OrderAPI/Production",
+      "MetricName": "ErrorRate",
+      "Dimensions": [
+        {"Name": "Service",     "Value": "order-api"},
+        {"Name": "Environment", "Value": "production"}
+      ],
+      "Statistic": "Average",
+      "Period": 60,
+      "EvaluationPeriods": 2,
+      "DatapointsToAlarm": 2,
+      "Threshold": 5.0,
+      "ComparisonOperator": "GreaterThanThreshold",
+      "TreatMissingData": "notBreaching",
+      "AlarmActions": ["arn:aws:sns:us-east-1:ACCOUNT_ID:OrderAPI-Alerts"],
+      "OKActions":    ["arn:aws:sns:us-east-1:ACCOUNT_ID:OrderAPI-Alerts"],
+      "_rationale": "5% errors means 1 in 20 orders failing — unacceptable for production; 2/2 datapoints ensures we're not chasing blips."
+    },
+    {
+      "AlarmName": "OrderAPI-Latency-P95-Critical",
+      "AlarmDescription": "CRITICAL: P95 latency exceeded 1000ms — users experiencing significant slowdowns.",
+      "Namespace": "OrderAPI/Production",
+      "MetricName": "P95LatencyMs",
+      "Dimensions": [
+        {"Name": "Service",     "Value": "order-api"},
+        {"Name": "Environment", "Value": "production"}
+      ],
+      "Statistic": "Average",
+      "Period": 60,
+      "EvaluationPeriods": 3,
+      "DatapointsToAlarm": 2,
+      "Threshold": 1000,
+      "ComparisonOperator": "GreaterThanThreshold",
+      "TreatMissingData": "notBreaching",
+      "AlarmActions": ["arn:aws:sns:us-east-1:ACCOUNT_ID:OrderAPI-Alerts"],
+      "OKActions":    ["arn:aws:sns:us-east-1:ACCOUNT_ID:OrderAPI-Alerts"],
+      "_rationale": "1s P95 aligns with industry SLO; using P95 (not average) catches tail latency that affects 1 in 20 users."
+    },
+    {
+      "AlarmName": "OrderAPI-Latency-P95-Warning",
+      "AlarmDescription": "WARNING: P95 latency exceeded 500ms — performance degrading, investigate before it worsens.",
+      "Namespace": "OrderAPI/Production",
+      "MetricName": "P95LatencyMs",
+      "Dimensions": [
+        {"Name": "Service",     "Value": "order-api"},
+        {"Name": "Environment", "Value": "production"}
+      ],
+      "Statistic": "Average",
+      "Period": 60,
+      "EvaluationPeriods": 5,
+      "DatapointsToAlarm": 3,
+      "Threshold": 500,
+      "ComparisonOperator": "GreaterThanThreshold",
+      "TreatMissingData": "notBreaching",
+      "AlarmActions": ["arn:aws:sns:us-east-1:ACCOUNT_ID:OrderAPI-Alerts"],
+      "OKActions":    ["arn:aws:sns:us-east-1:ACCOUNT_ID:OrderAPI-Alerts"],
+      "_rationale": "500ms is half our SLO — early warning gives time to investigate before users notice critical degradation."
+    },
+    {
+      "AlarmName": "OrderAPI-CPU-Critical",
+      "AlarmDescription": "CRITICAL: CPU utilization exceeded 80% — instance may be undersized or under load attack.",
+      "Namespace": "OrderAPI/System",
+      "MetricName": "cpu_usage_user",
+      "Statistic": "Average",
+      "Period": 60,
+      "EvaluationPeriods": 5,
+      "DatapointsToAlarm": 4,
+      "Threshold": 80,
+      "ComparisonOperator": "GreaterThanThreshold",
+      "TreatMissingData": "notBreaching",
+      "AlarmActions": ["arn:aws:sns:us-east-1:ACCOUNT_ID:OrderAPI-Alerts"],
+      "OKActions":    ["arn:aws:sns:us-east-1:ACCOUNT_ID:OrderAPI-Alerts"],
+      "_rationale": "80% sustained CPU indicates real saturation; 4/5 datapoints avoids false alarms from legitimate traffic bursts."
+    },
+    {
+      "AlarmName": "OrderAPI-Memory-Critical",
+      "AlarmDescription": "CRITICAL: Memory utilization exceeded 90% — OOM kill imminent, restart or scale immediately.",
+      "Namespace": "OrderAPI/System",
+      "MetricName": "mem_used_percent",
+      "Statistic": "Average",
+      "Period": 60,
+      "EvaluationPeriods": 3,
+      "DatapointsToAlarm": 3,
+      "Threshold": 90,
+      "ComparisonOperator": "GreaterThanThreshold",
+      "TreatMissingData": "notBreaching",
+      "AlarmActions": ["arn:aws:sns:us-east-1:ACCOUNT_ID:OrderAPI-Alerts"],
+      "OKActions":    ["arn:aws:sns:us-east-1:ACCOUNT_ID:OrderAPI-Alerts"],
+      "_rationale": "90% memory is the point of no return before Linux OOM killer terminates the process."
+    },
+    {
+      "AlarmName": "OrderAPI-OrderRate-Drop",
+      "AlarmDescription": "WARNING: Orders per minute dropped below 1 during business hours — possible service disruption.",
+      "Namespace": "OrderAPI/Production",
+      "MetricName": "OrdersPerMinute",
+      "Dimensions": [
+        {"Name": "Service",     "Value": "order-api"},
+        {"Name": "Environment", "Value": "production"}
+      ],
+      "Statistic": "Sum",
+      "Period": 300,
+      "EvaluationPeriods": 3,
+      "DatapointsToAlarm": 3,
+      "Threshold": 1,
+      "ComparisonOperator": "LessThanThreshold",
+      "TreatMissingData": "breaching",
+      "AlarmActions": ["arn:aws:sns:us-east-1:ACCOUNT_ID:OrderAPI-Alerts"],
+      "OKActions":    ["arn:aws:sns:us-east-1:ACCOUNT_ID:OrderAPI-Alerts"],
+      "_rationale": "Zero orders for 15 minutes could mean the create endpoint is broken — business metric catches silent failures that error rate alone misses."
+    }
+  ],
+  "sns_topic": {
+    "TopicName": "OrderAPI-Alerts",
+    "DisplayName": "Order API Alerts",
+    "_setup_instructions": [
+      "1. aws sns create-topic --name OrderAPI-Alerts",
+      "2. aws sns subscribe --topic-arn <ARN> --protocol email --notification-endpoint your@email.com",
+      "3. Confirm subscription in email",
+      "4. Replace ACCOUNT_ID in alarm ARNs above with your actual AWS account ID"
+    ]
+  }
+}

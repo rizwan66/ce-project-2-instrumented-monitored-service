@@ -1,0 +1,323 @@
+{
+  "widgets": [
+    {
+      "type": "text",
+      "x": 0,
+      "y": 0,
+      "width": 24,
+      "height": 1,
+      "properties": {
+        "markdown": "# Order API — Production Dashboard\n**Golden Signals:** Rate · Errors · Latency · Saturation  |  Namespace: `OrderAPI/Production`"
+      }
+    },
+
+    {
+      "type": "text",
+      "x": 0,
+      "y": 1,
+      "width": 24,
+      "height": 1,
+      "properties": {
+        "markdown": "## Traffic (Rate)"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 2,
+      "width": 8,
+      "height": 6,
+      "properties": {
+        "title": "Request Rate (req/min)",
+        "view": "timeSeries",
+        "stacked": false,
+        "metrics": [
+          ["OrderAPI/Production", "RequestRate", "Service", "order-api", "Environment", "production",
+           {"label": "Requests/min", "color": "#1f77b4", "stat": "Sum", "period": 60}]
+        ],
+        "period": 60,
+        "stat": "Sum",
+        "yAxis": {"left": {"min": 0}},
+        "annotations": {
+          "horizontal": [
+            {"label": "Warning threshold", "value": 500, "color": "#ff7f0e"},
+            {"label": "Critical threshold", "value": 1000, "color": "#d62728"}
+          ]
+        }
+      }
+    },
+    {
+      "type": "metric",
+      "x": 8,
+      "y": 2,
+      "width": 8,
+      "height": 6,
+      "properties": {
+        "title": "Orders Created per Minute",
+        "view": "timeSeries",
+        "metrics": [
+          ["OrderAPI/Production", "OrdersPerMinute", "Service", "order-api", "Environment", "production",
+           {"label": "Orders/min", "color": "#2ca02c", "stat": "Sum", "period": 60}],
+          ["OrderAPI/Production", "OrdersCancelled", "Service", "order-api", "Environment", "production",
+           {"label": "Cancellations/min", "color": "#ff7f0e", "stat": "Sum", "period": 60}]
+        ],
+        "period": 60,
+        "yAxis": {"left": {"min": 0}}
+      }
+    },
+    {
+      "type": "metric",
+      "x": 16,
+      "y": 2,
+      "width": 8,
+      "height": 6,
+      "properties": {
+        "title": "Average & Total Order Value ($)",
+        "view": "timeSeries",
+        "metrics": [
+          ["OrderAPI/Production", "AvgOrderValue", "Service", "order-api", "Environment", "production",
+           {"label": "Avg Order Value", "color": "#9467bd", "stat": "Average", "period": 60}],
+          ["OrderAPI/Production", "OrderValue", "Service", "order-api", "Environment", "production",
+           {"label": "Total Revenue", "color": "#17becf", "stat": "Sum", "period": 60, "yAxis": "right"}]
+        ],
+        "period": 60,
+        "yAxis": {"left": {"min": 0}, "right": {"min": 0}}
+      }
+    },
+
+    {
+      "type": "text",
+      "x": 0,
+      "y": 8,
+      "width": 24,
+      "height": 1,
+      "properties": {
+        "markdown": "## Errors"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 9,
+      "width": 8,
+      "height": 6,
+      "properties": {
+        "title": "Error Rate (%)",
+        "view": "timeSeries",
+        "metrics": [
+          ["OrderAPI/Production", "ErrorRate", "Service", "order-api", "Environment", "production",
+           {"label": "Error Rate %", "color": "#d62728", "stat": "Average", "period": 60}]
+        ],
+        "period": 60,
+        "yAxis": {"left": {"min": 0, "max": 100}},
+        "annotations": {
+          "horizontal": [
+            {"label": "Warning (1%)",  "value": 1,  "color": "#ff7f0e"},
+            {"label": "Critical (5%)", "value": 5,  "color": "#d62728"}
+          ]
+        }
+      }
+    },
+    {
+      "type": "metric",
+      "x": 8,
+      "y": 9,
+      "width": 8,
+      "height": 6,
+      "properties": {
+        "title": "HTTP Errors by Type",
+        "view": "timeSeries",
+        "metrics": [
+          ["OrderAPI/Production", "ValidationErrors",  "Service", "order-api", "Environment", "production",
+           {"label": "400 Validation", "color": "#ff7f0e", "stat": "Sum", "period": 60}],
+          ["OrderAPI/Production", "OrderNotFound",      "Service", "order-api", "Environment", "production",
+           {"label": "404 Not Found", "color": "#bcbd22", "stat": "Sum", "period": 60}],
+          ["OrderAPI/Production", "UnhandledErrors",    "Service", "order-api", "Environment", "production",
+           {"label": "500 Unhandled", "color": "#d62728", "stat": "Sum", "period": 60}],
+          ["OrderAPI/Production", "ChaosErrors",        "Service", "order-api", "Environment", "production",
+           {"label": "Chaos Injected", "color": "#8c564b", "stat": "Sum", "period": 60}]
+        ],
+        "period": 60,
+        "yAxis": {"left": {"min": 0}}
+      }
+    },
+    {
+      "type": "metric",
+      "x": 16,
+      "y": 9,
+      "width": 8,
+      "height": 6,
+      "properties": {
+        "title": "Error Rate vs Request Rate (Correlation)",
+        "view": "timeSeries",
+        "metrics": [
+          ["OrderAPI/Production", "RequestRate", "Service", "order-api", "Environment", "production",
+           {"label": "Requests/min", "color": "#1f77b4", "stat": "Sum", "period": 60}],
+          ["OrderAPI/Production", "ErrorRate", "Service", "order-api", "Environment", "production",
+           {"label": "Error Rate %", "color": "#d62728", "stat": "Average", "period": 60, "yAxis": "right"}]
+        ],
+        "period": 60,
+        "yAxis": {"left": {"min": 0}, "right": {"min": 0, "max": 100}}
+      }
+    },
+
+    {
+      "type": "text",
+      "x": 0,
+      "y": 15,
+      "width": 24,
+      "height": 1,
+      "properties": {
+        "markdown": "## Latency (Duration)"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 16,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "title": "API Latency Percentiles (ms)",
+        "view": "timeSeries",
+        "metrics": [
+          ["OrderAPI/Production", "P95LatencyMs", "Service", "order-api", "Environment", "production",
+           {"label": "P95 Latency", "color": "#ff7f0e", "stat": "Average", "period": 60}]
+        ],
+        "period": 60,
+        "yAxis": {"left": {"min": 0}},
+        "annotations": {
+          "horizontal": [
+            {"label": "Critical P95 (1000ms)", "value": 1000, "color": "#d62728"},
+            {"label": "Warning P95 (500ms)",   "value": 500,  "color": "#ff7f0e"}
+          ]
+        }
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 16,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "title": "Active Sessions",
+        "view": "timeSeries",
+        "metrics": [
+          ["OrderAPI/Production", "ActiveSessions", "Service", "order-api", "Environment", "production",
+           {"label": "Active Sessions", "color": "#2ca02c", "stat": "Average", "period": 60}]
+        ],
+        "period": 60,
+        "yAxis": {"left": {"min": 0}}
+      }
+    },
+
+    {
+      "type": "text",
+      "x": 0,
+      "y": 22,
+      "width": 24,
+      "height": 1,
+      "properties": {
+        "markdown": "## Saturation (Resource Utilization)"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 23,
+      "width": 8,
+      "height": 6,
+      "properties": {
+        "title": "CPU Utilization (%)",
+        "view": "timeSeries",
+        "metrics": [
+          ["OrderAPI/System", "cpu_usage_user",   {"label": "User",   "color": "#1f77b4", "stat": "Average", "period": 60}],
+          ["OrderAPI/System", "cpu_usage_system", {"label": "System", "color": "#ff7f0e", "stat": "Average", "period": 60}],
+          ["OrderAPI/System", "cpu_usage_iowait", {"label": "IOWait", "color": "#d62728", "stat": "Average", "period": 60}]
+        ],
+        "period": 60,
+        "yAxis": {"left": {"min": 0, "max": 100}},
+        "annotations": {
+          "horizontal": [
+            {"label": "Critical (80%)", "value": 80, "color": "#d62728"}
+          ]
+        }
+      }
+    },
+    {
+      "type": "metric",
+      "x": 8,
+      "y": 23,
+      "width": 8,
+      "height": 6,
+      "properties": {
+        "title": "Memory Used (%)",
+        "view": "timeSeries",
+        "metrics": [
+          ["OrderAPI/System", "mem_used_percent",
+           {"label": "Memory %", "color": "#9467bd", "stat": "Average", "period": 60}]
+        ],
+        "period": 60,
+        "yAxis": {"left": {"min": 0, "max": 100}},
+        "annotations": {
+          "horizontal": [
+            {"label": "Warning (75%)",  "value": 75, "color": "#ff7f0e"},
+            {"label": "Critical (90%)", "value": 90, "color": "#d62728"}
+          ]
+        }
+      }
+    },
+    {
+      "type": "metric",
+      "x": 16,
+      "y": 23,
+      "width": 8,
+      "height": 6,
+      "properties": {
+        "title": "Disk Used (%)",
+        "view": "timeSeries",
+        "metrics": [
+          ["OrderAPI/System", "used_percent",
+           {"label": "Disk %", "color": "#8c564b", "stat": "Average", "period": 300}]
+        ],
+        "period": 300,
+        "yAxis": {"left": {"min": 0, "max": 100}},
+        "annotations": {
+          "horizontal": [
+            {"label": "Warning (70%)",  "value": 70, "color": "#ff7f0e"},
+            {"label": "Critical (85%)", "value": 85, "color": "#d62728"}
+          ]
+        }
+      }
+    },
+
+    {
+      "type": "text",
+      "x": 0,
+      "y": 29,
+      "width": 24,
+      "height": 1,
+      "properties": {
+        "markdown": "## Alarm Status"
+      }
+    },
+    {
+      "type": "alarm",
+      "x": 0,
+      "y": 30,
+      "width": 24,
+      "height": 4,
+      "properties": {
+        "title": "Active Alarms",
+        "alarms": [
+          "arn:aws:cloudwatch:us-east-1:ACCOUNT_ID:alarm:OrderAPI-ErrorRate-Warning",
+          "arn:aws:cloudwatch:us-east-1:ACCOUNT_ID:alarm:OrderAPI-ErrorRate-Critical",
+          "arn:aws:cloudwatch:us-east-1:ACCOUNT_ID:alarm:OrderAPI-Latency-P95-Critical",
+          "arn:aws:cloudwatch:us-east-1:ACCOUNT_ID:alarm:OrderAPI-CPU-Critical",
+          "arn:aws:cloudwatch:us-east-1:ACCOUNT_ID:alarm:OrderAPI-Memory-Critical"
+        ]
+      }
+    }
+  ]
+}
