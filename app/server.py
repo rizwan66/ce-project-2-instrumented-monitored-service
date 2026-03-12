@@ -16,7 +16,7 @@ from functools import wraps
 import boto3
 import structlog
 from flask import Flask, request, jsonify, g
-from botocore.exceptions import ClientError
+from botocore.exceptions import ClientError, NoCredentialsError
 
 # ─── Configuration ────────────────────────────────────────────────────────────
 
@@ -75,7 +75,7 @@ def publish_metric(metric_name, value, unit="Count", dimensions=None):
                 "Dimensions": dimensions,
             }]
         )
-    except ClientError as e:
+    except (ClientError, NoCredentialsError) as e:
         log.warning("cloudwatch_publish_failed", metric=metric_name, error=str(e))
 
 
@@ -86,7 +86,7 @@ def publish_metrics_batch(metric_data):
             Namespace=Config.METRICS_NAMESPACE,
             MetricData=metric_data,
         )
-    except ClientError as e:
+    except (ClientError, NoCredentialsError) as e:
         log.warning("cloudwatch_batch_publish_failed", error=str(e))
 
 # ─── In-Memory State (simulates a database) ───────────────────────────────────
